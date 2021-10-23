@@ -17,6 +17,14 @@ RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
 RUN pip install yfinance --upgrade --no-cache-dir
 COPY . /opt/app/
 
+# set french language for CSV files
+RUN apt-get -y install locales
+RUN sed -i '/fr_FR.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen
+ENV LANG fr_FR.UTF-8  
+ENV LANGUAGE fr_FR:fr  
+ENV LC_ALL fr_FR.UTF-8 
+
 # start server
 STOPSIGNAL SIGTERM
 CMD gunicorn display_stock.wsgi --bind 0.0.0.0:$PORT --timeout 600
