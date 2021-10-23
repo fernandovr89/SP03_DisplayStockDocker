@@ -1,0 +1,60 @@
+<head>
+<style>
+#stocks {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 500px;
+}
+
+#stocks td, #stocks th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#stocks tr:nth-child(even){background-color: #f2f2f2;}
+
+#stocks tr:hover {background-color: #ddd;}
+
+#stocks th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+input[type=submit] {
+  background-color: #555555;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+</style>
+</head>
+
+<div style="width:100%;">
+  <div style="float:left;">
+   <table id="stocks">
+   <tr>
+     <th>Name</th> 
+     <th>Value</th>
+   </tr>
+   {% load l10n %}
+   {% for b in obj %}
+   <tr>
+    <td>{{ b.name }}</td>
+    <td align=right>{{ b.price | floatformat:3 | localize }} &euro;</td>
+   </tr>
+   {% endfor %}
+   </table>
+  </div>
+  <div style="float:left; margin-left:10px;">
+    <form action="/display/get_csv/" method="get"><input type="submit" value="Download"/></form>
+  </div>
+</div>
