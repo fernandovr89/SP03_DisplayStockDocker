@@ -13,9 +13,9 @@ def display(request):
     'DANONE','EDENRED','ENGIE','ESSILOR LUXOTTICA','HERMES INTL',\
     'ICADE','IDI','IPSEN','LAGARDERE','L OREAL',\
     'METROPOLE TELEVISION','MICHELIN','ORANGE','PERNOD RICARD',\
-    'ROTSCHILD','RUBIS','SANOFI','SCHNEIDER ELECTRIC','SCOR',\
+    'ROTHSCHILD','RUBIS','SANOFI','SCHNEIDER ELECTRIC','SCOR',\
     'SUEZ ENVIRONNEMENT','THERMADOR GROUPE','TOTAL ENERGIES', \
-    'UNIVERSAL MUSIC GROUP N.V.','VERALLIA', 'VIVENDI']
+    'UNIVERSAL MUSIC GROUP N.V.','VEOLIA ENVIRONNEMENT','VERALLIA', 'VIVENDI']
     st_toget = ['AC.PA','AI.PA','CS.PA','BNP.PA','EN.PA',\
     'CRBP2.PA','CNF.PA',\
     'BN.PA','EDEN.PA','ENGI.PA','EL.PA','RMS.PA',\
@@ -23,7 +23,7 @@ def display(request):
     'MMT.PA','ML.PA','ORA.PA','RI.PA',\
     'ROTH.PA','RUI.PA','SAN.PA','SU.PA','SCR.PA',\
     'SEV.PA','THEP.PA','TTE.PA',\
-    'UMG.AS','VRLA.PA', 'VIV.PA']
+    'UMG.AS','VIE.PA','VRLA.PA', 'VIV.PA']
     price_fl = None
     Stocks.objects.all().delete()
     current_time_tmp = datetime.datetime.now()+datetime.timedelta(days=1)
