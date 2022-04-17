@@ -46,10 +46,10 @@ input[type=submit] {
      <th>Value</th>
    </tr>
    {% load l10n %}
-   {% for b in obj %}
+   {% for stock in stocks %}
    <tr>
-    <td>{{ b.name }}</td>
-    <td align=right>{{ b.price | floatformat:3 | localize }} &euro;</td>
+    <td>{{ stock.name }}</td>
+    <td align=right>{{ stock.price | floatformat:3 | localize }} &euro;</td>
    </tr>
    {% endfor %}
    </table>

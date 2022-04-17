@@ -58,7 +58,7 @@ def display(request) -> HttpResponse:
         stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_fl)
         stock_model.save()
         price_fl = None
-    return render(request, "template.tmpl", {"obj": Stocks.objects.all()})
+    return render(request, "template.tmpl", {"stocks": Stocks.objects.all()})
 
 
 def get_csv(request) -> HttpResponse:
