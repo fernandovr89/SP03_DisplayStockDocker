@@ -7,25 +7,7 @@ import locale
 import datetime
 
 
-def display(request):
-    # fmt: off
-    st_name = ['ACCOR','AIR LIQUIDE','AXA','BNP PARIBAS','BOUYGUES',\
-    'CRCAM BRIE PICARDIE','CRCAM NORD France',\
-    'DANONE','EDENRED','ENGIE','ESSILOR LUXOTTICA','HERMES INTL',\
-    'ICADE','IDI','IPSEN','LAGARDERE','L OREAL',\
-    'METROPOLE TELEVISION','MICHELIN','ORANGE','PERNOD RICARD',\
-    'ROTHSCHILD','RUBIS','SANOFI','SCHNEIDER ELECTRIC','SCOR',\
-    'SUEZ ENVIRONNEMENT','THERMADOR GROUPE','TOTAL ENERGIES', \
-    'UNIVERSAL MUSIC GROUP N.V.','VEOLIA ENVIRONNEMENT','VERALLIA', 'VIVENDI']
-    st_toget = ['AC.PA','AI.PA','CS.PA','BNP.PA','EN.PA',\
-    'CRBP2.PA','CNF.PA',\
-    'BN.PA','EDEN.PA','ENGI.PA','EL.PA','RMS.PA',\
-    'ICAD.PA','IDIP.PA','IPN.PA','MMB.PA','OR.PA',\
-    'MMT.PA','ML.PA','ORA.PA','RI.PA',\
-    'ROTH.PA','RUI.PA','SAN.PA','SU.PA','SCR.PA',\
-    'SEV.PA','THEP.PA','TTE.PA',\
-    'UMG.AS','VIE.PA','VRLA.PA', 'VIV.PA']
-    # fmt: on
+def display(request) -> HttpResponse:
     # dotCode is used in Yahoo Finance (e.g ACCOR SA code is AC.PA)
     stocks = [
         {"name": "ACCOR", "dotCode": "AC.PA"},
@@ -69,17 +51,17 @@ def display(request):
     diff_time = diff_time_tmp.strftime("%Y-%m-%d")
     print(current_time)
     print(diff_time)
-    for st_toget_i in range(len(st_toget)):
-        price_fl = st.get_fixstock_quote(st_toget[st_toget_i], diff_time, current_time)
+    for stock in stocks:
+        price_fl = st.get_fixstock_quote(stock["dotCode"], diff_time, current_time)
         if price_fl is None or type(price_fl) == str:
             price_fl = 0.0
-        stock_model = Stocks(name=st_name[st_toget_i], symbol=st_toget[st_toget_i], price=price_fl)
+        stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_fl)
         stock_model.save()
         price_fl = None
     return render(request, "template.tmpl", {"obj": Stocks.objects.all()})
 
 
-def get_csv(request):
+def get_csv(request) -> HttpResponse:
     locale.setlocale(locale.LC_ALL, "fr_FR.utf8")
     response = HttpResponse(content_type="text/csv")
     response["Content-Disposition"] = "attachment; filename=get_values.csv"
