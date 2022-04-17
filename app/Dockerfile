@@ -14,7 +14,6 @@ RUN mkdir -p /opt/app/pip_cache
 COPY requirements.txt /opt/app/
 WORKDIR /opt/app
 RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
-RUN pip install yfinance --upgrade --no-cache-dir
 COPY . /opt/app/
 
 # set french language for CSV files
