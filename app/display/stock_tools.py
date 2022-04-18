@@ -2,7 +2,13 @@ import pandas as pd
 import datetime
 import yfinance as yf
 
+
 from display.models import Stocks
+
+from schedule import Scheduler
+import threading
+import time
+
 
 # Retrieves the stock quote for the given symbol
 # from Yahoo Finance as a float.
@@ -25,7 +31,7 @@ def get_all_stocks():
     return Stocks.objects.all()
 
 
-def download_stocks():
+def download_stocks(isJob=False):
     # dotCode is used in Yahoo Finance (e.g ACCOR SA code is AC.PA)
     stocks = [
         {"name": "ACCOR", "dotCode": "AC.PA"},
@@ -61,20 +67,60 @@ def download_stocks():
         {"name": "VERALLIA", "dotCode": "VRLA.PA"},
         {"name": "VIVENDI", "dotCode": "VIV.PA"},
     ]
-    price_fl = None
+    price_float = None
     Stocks.objects.all().delete()
     current_time_tmp = datetime.datetime.now() + datetime.timedelta(days=1)
     current_time = current_time_tmp.strftime("%Y-%m-%d")
     diff_time_tmp = datetime.datetime.now() - datetime.timedelta(days=6)
     diff_time = diff_time_tmp.strftime("%Y-%m-%d")
-    print(current_time)
-    print(diff_time)
-    for stock in stocks:
-        price_fl = get_fixstock_quote(stock["dotCode"], diff_time, current_time)
-        if price_fl is None or type(price_fl) == str:
-            price_fl = 0.0
-        stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_fl)
+    stock_objects = []
+    for index, stock in enumerate(stocks):
+        price_float = get_fixstock_quote(stock["dotCode"], diff_time, current_time)
+        if price_float is None or type(price_float) == str:
+            price_float = 0.0
+        stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_float)
         stock_model.save()
-        price_fl = None
+        if index == 0 and isJob:
+            price_float = float(Stocks.objects.filter(symbol=stock["dotCode"])[0].price) + 0.1
+        stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_float)
+        stock_objects.append(stock_model)
+        stock_model.save()
+        price_float = None
 
-    return Stocks.objects.all()
+    return stock_objects
+
+
+def start_scheduler():
+    scheduler = Scheduler()
+    scheduler.every().minute.do(download_stocks, isJob=True)
+    scheduler.run_continuously()
+
+
+def run_continuously(self, interval=1):
+    """Continuously run, while executing pending jobs at each elapsed
+    time interval.
+    @return cease_continuous_run: threading.Event which can be set to
+    cease continuous run.
+    Please note that it is *intended behavior that run_continuously()
+    does not run missed jobs*. For example, if you've registered a job
+    that should run every minute and you set a continuous run interval
+    of one hour then your job won't be run 60 times at each interval but
+    only once.
+    """
+
+    cease_continuous_run = threading.Event()
+
+    class ScheduleThread(threading.Thread):
+        @classmethod
+        def run(cls):
+            while not cease_continuous_run.is_set():
+                self.run_pending()
+                time.sleep(interval)
+
+    continuous_thread = ScheduleThread()
+    continuous_thread.setDaemon(True)
+    continuous_thread.start()
+    return cease_continuous_run
+
+
+Scheduler.run_continuously = run_continuously

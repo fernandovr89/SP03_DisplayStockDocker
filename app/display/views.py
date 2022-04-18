@@ -6,6 +6,7 @@ import locale
 
 
 def display(request) -> HttpResponse:
+    st.start_scheduler()
     return render(request, "template.tmpl", {"stocks": st.download_stocks()})
 
 
