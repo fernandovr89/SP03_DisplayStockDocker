@@ -21,6 +21,7 @@ def display(request) -> HttpResponse:
         {"name": "EDENRED", "dotCode": "EDEN.PA"},
         {"name": "ENGIE", "dotCode": "ENGI.PA"},
         {"name": "ESSILOR LUXOTTICA", "dotCode": "EL.PA"},
+        {"name": "EUROAPI SA", "dotCode": "EAPI.PA"},
         {"name": "HERMES INTL", "dotCode": "RMS.PA"},
         {"name": "ICADE", "dotCode": "ICAD.PA"},
         {"name": "IDI", "dotCode": "IDIP.PA"},
