@@ -52,8 +52,6 @@ def display(request) -> HttpResponse:
     print(diff_time)
     for stock in stocks:
         price_fl = st.get_fixstock_quote(stock["dotCode"], diff_time, current_time)
-        if price_fl is None or type(price_fl) == str:
-            price_fl = 0.0
         stock_model = Stocks(name=stock["name"], symbol=stock["dotCode"], price=price_fl)
         stock_model.save()
         price_fl = None

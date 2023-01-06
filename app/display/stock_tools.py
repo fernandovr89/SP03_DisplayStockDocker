@@ -12,7 +12,11 @@ def get_fixstock_quote(symbol, diff_time, current_time):
         print(e)
         data = pd.DataFrame()
 
-    price_fl = None
-    if not data.empty:
-        price_fl = float(str("%5.3f" % data["Close"].values[-1]))
+    price_fl = 0.0
+    if not data.empty and "Close" in data:
+        try:
+            price_fl = float(str("%5.3f" % data["Close"].values[-1]))
+        except Exception as e:
+            print(f"Exception message: %s while getting symbol: %s" % (e, symbol))
+
     return price_fl
