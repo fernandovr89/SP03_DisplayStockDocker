@@ -12,6 +12,7 @@ def display(request) -> HttpResponse:
     stocks = [
         {"name": "ACCOR", "dotCode": "AC.PA"},
         {"name": "AIR LIQUIDE", "dotCode": "AI.PA"},
+        {"name": "ALD SA", "dotCode": "ALD.PA"},
         {"name": "AXA", "dotCode": "CS.PA"},
         {"name": "BNP PARIBAS", "dotCode": "BNP.PA"},
         {"name": "BOUYGUES", "dotCode": "EN.PA"},
