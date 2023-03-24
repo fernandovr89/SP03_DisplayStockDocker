@@ -37,7 +37,7 @@ def display(request) -> HttpResponse:
         {"name": "SANOFI", "dotCode": "SAN.PA"},
         {"name": "SCHNEIDER ELECTRIC", "dotCode": "SU.PA"},
         {"name": "SCOR", "dotCode": "SCR.PA"},
-        {"name": "STELLANTIS NV", "dotCode": "STLA.PA"},
+        {"name": "STELLANTIS NV", "dotCode": "STLAP.PA"},
         {"name": "THERMADOR GROUPE", "dotCode": "THEP.PA"},
         {"name": "TOTAL ENERGIES", "dotCode": "TTE.PA"},
         {"name": "VEOLIA ENVIRONNEMENT", "dotCode": "VIE.PA"},
