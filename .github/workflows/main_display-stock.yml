@@ -8,6 +8,16 @@ on:
     branches:
       - main
   workflow_dispatch:
+  
+
+env:
+  PORT: 80
+  ALLOWED_HOSTS: azurewebsites.net
+
+defaults:
+ run:
+  working-directory: ./app
+
 
 jobs:
   build:
@@ -31,7 +41,7 @@ jobs:
       with:
         push: true
         tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_62bd55ebff654318a02218e81c1195e0 }}/fernandovr89/display-stock:${{ github.sha }}
-        file: ./app/Dockerfile
+        file: ./Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
