@@ -35,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_62bd55ebff654318a02218e81c1195e0 }}/fernandovr89/display-stock:${{ github.sha }}
+        tags: index.docker.io/${{ secrets.AzureAppService_ContainerUsername_62bd55ebff654318a02218e81c1195e0 }}/display-stock:${{ github.sha }}
         file: ./GithubActionsDockerfile
 
   deploy:
@@ -53,4 +53,4 @@ jobs:
         app-name: 'display-stock'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_54f15e17ae464ea1ab9f4466ad9c3297 }}
-        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_62bd55ebff654318a02218e81c1195e0 }}/fernandovr89/display-stock:${{ github.sha }}'
+        images: 'index.docker.io/${{ secrets.AzureAppService_ContainerUsername_62bd55ebff654318a02218e81c1195e0 }}/display-stock:${{ github.sha }}'
